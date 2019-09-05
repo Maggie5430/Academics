@@ -1,0 +1,84 @@
+---
+title: "Assignment05"
+author: "Margaret Connor"
+date: "2/26/2019"
+output: html_document
+---
+
+**What is the rule learning method?**
+
+The rule learning method or one rule method is a classification method similar to the decision tree and Naive Bayer's methods. The Rule learning method generates one rule for each factor and uses the rule with the smallest error to classify unlabled data. The lower the error means a higher contribution to the predictability of the model. In relation to the decision tree this method is similar to a 1-level decision tree and like Naive Bater's it relies on the ues of a frequency table to find the smallest error in the rules. 
+
+**Try to explain how this method work step by step.**
+
+We will use rule learning to predict a home's value (low, medium, high) based on the following data. 
+
+Source of data example (Molnar, Christoph. “Interpretable Machine Learning.” Christoph Molnar, 22 Feb. 2019, christophm.github.io/interpretable-ml-book/rules.html.)
+
+![](/Users/margaretconnor/NetBeansProjects/Rdata/data.png)
+
+**STEP 1** The method begins by count how often a factor value appears with the target lable. Creating a frequency table to help illistrate how often a factor value appears with the target label. 
+
+![](/Users/margaretconnor/NetBeansProjects/Rdata/frequency.png)
+**STEP 2** Next we make a rule for each factor that can be applied to the observed lables. We do this by going row for row and identifying if else statements for each factor value
+
+**Location**
+
+  * IF location = bad THEN value = low
+  * IF location = good THEN value = high
+  
+**Size**
+
+  * IF size = big THEN value = high
+  * IF size = medium THEN value = medium
+  * IF size = small THEN value = low
+  
+**Pets**
+
+  * IF pets = no THEN value = high
+  * IF pets = only cats THEN value = medium
+  * IF pets = yes THEN value = low
+  
+**STEP 3** After the labels rules have been identified the error of each factor's rules is calculated. 
+
+Location Error rate = 4/10
+
+Size Error rate = 3/10
+
+Pets Error rate = 4/10
+
+**STEP 4** Finally the rule with the lowest error rate is selected as the one rule and used to predict unlabled data. In this exampel we have a predicted accuracy rate of approzimatly 70%, and classifies all examples based on the one rule.
+
+**How to use this classification method using R:** Provide the R package and R function
+```{r}
+#install.packages("OneR");
+library(OneR)
+```
+**How to use this classification method using R:** Try to apply this method using any of the available data from previous labs to train and test the model
+
+Import the data from Lab 5 credit.csv
+```{r}
+credit <-read.csv('/Users/margaretconnor/NetBeansProjects/Rdata/credit.csv', stringsAsFactors = TRUE)
+str(credit)
+```
+Divide training (89%) and test set (10%)
+```{r}
+set.seed(123)
+train_sample<-sample(1000, 900)
+credit_train<-credit[train_sample, ]
+credit_test<-credit[-train_sample, ]
+```
+
+Train OneR model on training set
+```{r}
+#train
+model_train <- OneR(credit_train, verbose = TRUE)
+summary(model_train)
+```
+
+Evaluate the results of the model
+```{r}
+prediction <- predict(model_train, credit_test)
+eval_model(prediction, credit_test)
+```
+The OneR model on the training set reached an accuracy of 70% when predicting wither a loan would default. This is achieved with just one simple rule that when “credit_history” is critical, good, or, poor then default = no else default = yes.

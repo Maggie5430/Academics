@@ -1,0 +1,230 @@
+---
+title: "Lab7"
+author: "Margaret Connor"
+date: "3/6/2019"
+output: html_document
+---
+
+Interacting with friends on a social networking service (SNS), such as Facebook and Instagram has become a rite of passage for teenagers around the world.
+
+Having a relatively large amount of disposable income, these adolescents are a coveted demographic for businesses hoping to sell snacks, beverages, electronics, and hygiene products. The many millions of teenage consumers using such sites have attracted the attention of marketers struggling to find an edge in an increasingly competitive market.
+
+One way to gain this edge is to identify segments of teenagers who share similar tastes, so that clients can avoid targeting advertisements to teens with no interest in the product being sold.
+
+For instance, sporting apparel is likely to be a difficult sell to teens with no interest in sports.
+
+Given the text of teenagers’ SNS pages, we can identify groups that share common interests such as sports, religion, or music.
+
+**Clustering** can automate the process of discovering the natural segments in this population. However, it will be up to us to decide whether or not the clusters are interesting and how we can use them for advertising.
+
+Let’s try this process from start to finish.
+
+##Collecting data
+For this analysis, we will use a dataset representing a random sample of 30,000 U.S. high school students who had profiles on a well-known SNS in 2006.
+
+To protect the users’ anonymity, the SNS will remain unnamed. However, at the time the data was collected, the SNS was a popular web destination for US teenagers.
+
+Therefore, it is reasonable to assume that the profiles represent a fairly wide cross section of American adolescents in 2006.
+
+The data was sampled evenly across four high school graduation years (2006 through 2009) representing the senior, junior, sophomore, and freshman classes at the time of data collection.
+
+Using an automated web crawler, the full text of the SNS profiles were downloaded, and each teen’s gender, age, and number of SNS friends was recorded.
+
+A text mining tool was used to divide the remaining SNS page content into words. From the top 500 words appearing across all the pages, 36 words were chosen to represent five categories of interests: namely extracurricular activities, fashion, religion, romance, and antisocial behavior.
+
+The 36 words include terms such as football, sexy, kissed, bible, shopping, death, and drugs.
+
+The final dataset indicates, for each person, how many times each word appeared in the person’s SNS profile.
+
+##Exploring and preparing the data
+**1. How to load the data for analysis? Do we need to use stringsAsFactors = TRUE to load the data properly? why?**
+```{r}
+snsdata <-read.csv('/Users/margaretconnor/NetBeansProjects/Rdata/snsdata.csv')
+```
+
+We do not need to user stringAsFactor = True because factor features are delt with later by
+
+**2. Look into the data structure, any problen you can find in the gender data? How many records are affected by this problem in percent? Is there more female in the data than male? what that means?**
+
+```{r}
+str(snsdata)
+table(snsdata$gender)
+```
+
+The gender factors include "F" (female) "M"(male) and NA (not applicable) this means for a number of examples we have no Female or make data. 27,276/30,000 include "F" and "M" descriptions meaning about 9% of the data os affected by this problem
+
+**3. Check if any other feature has the same problem and find their count and percentage.**
+```{r}
+summary(snsdata$gradyear)
+summary(snsdata$age)
+summary(snsdata$friends)
+```
+
+looking at the remaining categorial factors age looks like they have missing data. 5,086 records means about 17% of examples are missing ages.
+
+**4. By looking into the age summary, is there any unreasonable values? How to solve this problem?**
+
+The age summary provide unreasonable min and max values. The minimum age provided is 3 and the maximum is 106, when we should be expecting ages ranging from 13 to 20.
+
+Any values that are not between 13 and 20 should be removed becuase the age is unlikely to be real
+```{r}
+snsdata$age <- ifelse(snsdata$age >= 13 & snsdata$age < 20,snsdata$age, NA)
+summary(snsdata$age)
+```
+
+##Data preparation - dummy coding missing values
+An easy solution for handling the missing values is to exclude any record with a missing value. However, if you think through the implications of this practice, you might think twice before doing so-just because it is easy does not mean it is a good idea!
+
+**5. What is the problem with the approach of excluding records with missing data? explain using the age and gender missing data numbers**
+
+The problem is that approximately 26% (9 + 17) of the examples are missing data. Excluding the data would impact our data pool significantly. 
+
+An alternative solution for categorical variables like **gender** is to treat a missing value as a separate category.
+
+For instance, rather than limiting to female and male, we can add an additional category for the unknown gender named “no_gender”. This allows us to utilize dummy coding.
+
+**6. Use the dummy coding solution to solve the missing value in the gender variable. Confirm your result by showing the table of each category.**
+
+```{r}
+snsdata$female <- ifelse(snsdata$gender == "F" &
+                         !is.na(snsdata$gender), 1, 0)
+snsdata$no_gender <- ifelse(is.na(snsdata$gender), 1, 0)
+
+# check our recoding work
+table(snsdata$gender, useNA = "ifany")
+table(snsdata$female, useNA = "ifany")
+table(snsdata$no_gender, useNA = "ifany")
+```
+
+## Data preparation - imputing the missing values
+Next, let’s eliminate the missing age values.
+
+As age is numeric, it doesn’t make sense to create an additional category for the unknown values-where would you rank “unknown” relative to the other ages.
+
+Instead, we’ll use a different strategy known as **imputation**, which involves filling in the missing data with a guess as to the true value.
+
+Can you think of a way we might be able to use the SNS data to make an informed guess about a teenager’s age?
+
+If you are thinking of using the graduation year, you’ve got the right idea. Most people in a graduation cohort were born within a single calendar year. If we can identify the typical age for each cohort, we would have a reasonable estimate of the age of a student in that graduation year. One way to find a typical value is by calculating the average or mean value.
+
+**7. What is the problem, if we try to apply the mean() function? How to solve it?**
+```{r}
+mean(snsdata$age)
+```
+The issue is that age is missing in some exampls, so the mean will results in NA. Instead we can use mean(teens$age, na.rm = TRUE) to fix the issue
+```{r}
+mean(snsdata$age, na.rm = TRUE) 
+```
+
+**8. How to find the average age for each graduation year using one function called aggregate()? Is there a pattern here?**
+```{r}
+aggregate(data = snsdata, age ~ gradyear, mean, na.rm = TRUE)
+```
+
+Yes, the mean age differes by one year per change in graduatuin tear.
+
+**9. How to merge those results into the original data? Explain the steps and check if all the missing data was replaced.**
+We replace missing data with means using ifelse() call
+```{r}
+ave_age <- ave(snsdata$age, snsdata$gradyear, FUN = function(x) mean(x, na.rm = TRUE))
+snsdata$age <- ifelse(is.na(snsdata$age), ave_age, snsdata$age)
+
+summary(snsdata$age)
+```
+
+##Training a model on the data
+To cluster the teenagers into marketing segments, we will use an implementation of k-means in the **stats** package, which should be included in your R installation by default.
+
+The **kmeans()** function requires a data frame containing only numeric data and a parameter specifying the desired number of clusters.
+
+If you have these two things ready, the actual process of building the model is simple.
+
+The trouble is that choosing the right combination of data and clusters can be a bit of an art; sometimes a great deal of trial and error is involved.
+
+We’ll start our cluster analysis by considering only the 36 features that represent the number of times various interests appeared on the teen SNS profiles.
+
+**10. How to make this dataset?**
+```{r}
+interests <- snsdata[5:40]
+```
+
+**11. What is a common practice used prior to using distance calculation in ML analysis? Why?**
+
+Using z-score is common practice to make all variables in the same range.
+
+**12. Apply this common practice to the data frame used in this analysis. Make sure that the result data is a data frame.**
+```{r}
+interests_z <- as.data.frame(lapply(interests, scale))
+```
+
+Our last decision involves deciding how many clusters to use for segmenting the data.
+
+If we use too many clusters, we may find them too specific to be useful; conversely, choosing too few may result in heterogeneous groupings. You should feel comfortable experimenting with the values of k.
+
+If you don’t like the result, you can easily try another value and start over.
+
+Let’s start with **k = 5.**
+
+To use the k-means algorithm to divide the teenagers’ interest data into five clusters, we use the **kmeans()** function on the interests data frame. Because the k-means algorithm utilizes random starting points, the **set.seed()** function is used to ensure that the results match the output in the examples that follow.
+
+**13. Set the seed and train the data using the kmeans() function with k=5.**
+```{r}
+set.seed(1) 
+sns_clusters <- kmeans(interests_z, 5)
+```
+
+The result of the k-means clustering process is a list named **teen_clusters** that stores the properties of each of the five clusters.
+
+Let’s dig in and see how well the algorithm has divided the teens’ interest data.
+
+##Evaluating model performance
+Evaluating clustering results can be somewhat subjective.
+
+Ultimately, the success or failure of the model hinges on whether the clusters are useful for their intended purpose.
+
+As the goal of this analysis was to identify clusters of teenagers with similar interests for marketing purposes, we will largely measure our success in qualitative terms.
+
+For other clustering applications, more quantitative measures of success may be needed. One of the most basic ways to evaluate the utility of a set of clusters is to examine the number of examples falling in each of the groups. If the groups are too large or too small, they are not likely to be very useful.
+
+**14. How to obtain the size of the kmeans() clusters? Explain those results.**
+```{r}
+table(sns_clusters$cluster)
+```
+From here we can see that the most examples lie in cluster 3, the least exist in cluster 960
+
+**15. How to obtain the clusters centroids coordinates? Explain those results.**
+```{r}
+sns_clusters$centers
+```
+The results show the coordinate for each feature space, for each cluster. We see that the cluster 5 has a coordinates of 1.39802529 for the "basketball" feature and 1.22863428 for the "football" feature. These coordinates are used in the distance formulat when examples are categorized.
+
+**16. Can you identify some clusters interests? How those results can be used for marketing?**
+```{r}
+sns_clusters
+sns_clusters$centers
+```
+we examine that the cluster center falls above or below the mean of each category. We notice cluster 3 is above the mean in all sports categories, from here we an assume that cluster 3 relates to extracuricular activities. If we continue doing this for all clusters we can identify each cluster's interests 
+
+##Improving model performance
+Because clustering creates new information, the performance of a clustering algorithm depends at least somewhat on both the quality of the clusters themselves as well as what is done with that information.
+
+In the preceding section, we already demonstrated that the five clusters provided useful and novel insights into the interests of teenagers.
+
+By that measure, the algorithm appears to be performing quite well.
+
+Therefore, we can now focus our effort on turning these insights into action.
+
+We’ll begin by applying the clusters back onto the full dataset.
+
+**17. How to add the clusters assignment as a new feature to the full dataset? show the results of the first 10 inputs.**
+```{r}
+sns_ass10 <- kmeans(interests_z, 5,nstart=10)
+sns_clusters$tot.withinss
+sns_ass10$tot.withinss
+```
+
+**18. Does the age vary by clusters? How about the gender and the friends feature? Explain each results.**
+```{r}
+aggregate(data = snsdata, age ~ sns_clusters$cluster, mean)
+```
+The age only varies slightly by cluster, we see that cluster 4 varies the most dropping into the youngest age mean

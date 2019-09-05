@@ -1,0 +1,64 @@
+---
+title: "Lab6"
+author: "Margaret Connor"
+date: "3/4/2019"
+output: html_document
+---
+
+# Bagging
+To illustrate the process of bagging a model, let’s use the credit data to find the best scoring model.
+
+The **caret** package offers an implementation of bagged decision trees.
+
+To train the model, the train() function works similar to many of the models used previously.
+
+**1. Import and read the credit data. Install and load caret package**
+```{r}
+credit <-read.csv('/Users/margaretconnor/NetBeansProjects/Rdata/credit.csv', stringsAsFactors = TRUE)
+# install.packages("caret")
+library(caret)
+```
+
+**2. Set the seed to 300 and train the credit data using train() function from caret package with the method treebag. Name it, mybag**
+```{r}
+set.seed(300)
+mybag <- train(default ~ ., data = credit, method = "treebag")
+```
+
+**3. Evaluate the training data, mybag, using predict() function. Find the confusion matrix, the accuracy and error rate.**
+```{r}
+prediction <- predict(mybag, credit)
+confusionMatrix(prediction, credit$default)
+```
+
+**4. Redo question 2 and 3 using 10 cross validation, by applying the traincontrol() function in caret package. Explain and compare the results**
+```{r}
+ctrl <-trainControl(method = "cv", number = 10) 
+m <-train(default ~ ., data = credit, method = "treebag", trControl= ctrl) 
+prediction2 <- predict(m, credit)
+confusionMatrix(prediction2, credit$default)
+```
+
+# Random Forests
+By default, the randomForest() function creates an ensemble of 500 trees that consider sqrt(p) random features at each split, where p is the number of features in the training dataset and sqrt() refers to R’s square root function.
+
+Whether or not these default parameters are appropriate depends on the nature of the learning task and training data. Generally, more complex learning problems and larger datasets (either more features or more examples) work better with a larger number of trees, though this needs to be balanced with the computational expense of training more trees.
+
+The goal of using a large number of trees is to train enough so that each feature has a chance to appear in several models. This is the basis of the sqrt(p) default value for the mtry parameter; using this value limits the features sufficiently so that substantial random variation occurs from tree-to-tree.
+
+For example, since the credit data has 16 features, each tree would be limited to splitting on four features at any time.
+
+Let’s see how the default **randomForest()** parameters work with the credit data. We’ll train the model just as we did with other learners. Again, the set.seed() function ensures that the result can be replicated.
+
+**5. Install and load randomForest package**
+```{r}
+# install.packages("randomForest")
+Library(randomForest)
+```
+
+# Training the data using random forest
+**6. Split the data into train and test set as we did in lab 5. Train the credit data using the randomForest() function. Name it, myrf. Explain the result of myrf**
+
+**7. Apply the random forest method to the test set and find the confusion matrix. Discuss the results**
+
+

@@ -1,0 +1,35 @@
+Q: Where is the variable watch window on your screen? What information does this present to you?
+A: The variable watch window is on the bottom of the screen inside variable it gives me the name, type and value of the variables
+
+Q: Where is the method call stack on your screen? What information does this describe?
+A: It also appears on the bottom and posses the name of the methods
+
+Q: Find the shortcut keys for the following debugging commands, and describe what each does in comments.
+A: Step over F8, it runs the method and moves on
+A: Step into F7, it opens the method and starts at the begining this one goes through the code while Step over runs it and moves on
+A: Step out F7 this leaves a method running what is left then moving on step into goes into a method while this one leaves it
+A: Continue F5 Continue moves on this does not stop like when you are moving by steps
+ 
+Q: To what address does “this” map to?
+A: this maps to the address of the object that is being used/called on
+
+Q: To what address does “input” or “ad“ map to?
+A: lab4.AssertDemo@75b84c92
+
+Q: What does this mean? Explain this in your comments.
+A: This is a keyword refers to the instance of the class that is being used
+
+Q: Which technique do you prefer?Why?
+A: I prefer using the debugger because there is no need to import an assert or make a method flagger  
+
+Q: Are some debugging techniques more (or less) appropriate for longer programs?
+A: Yes, debugging methods is very important on longer code with many methods.
+
+Q: What are the advantages to using a debugger with a GUI?
+A: It is easier to see and can give you flags or messages before compiling.
+
+Q: What can you inspect here that you couldn’t when just printing to the console?
+A: You can see exactly what went wrong and the state of the code when the exception happened.
+
+Q: How can proper documentation help in finding and avoiding bugs?
+A: You don't need to completely relearn what the code does and have a good idea on where the bug may be

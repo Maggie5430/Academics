@@ -1,0 +1,386 @@
+---
+title: "Assignment04"
+author: "Margaret Connor"
+date: "2/19/2019"
+output: html_document
+---
+
+**Objective: Learn how to apply the Naive Bayes algorithm.**
+
+Advertisers utilize Short Message Service (SMS) text messages to target potential consumers with unwanted advertising known as SMS spam. This type of spam is a big problem because, unlike e-mail spam, many cellular phone users pay a fee per SMS received.
+
+Developing a classification algorithm that could filter SMS spam would provide a useful tool for cellular phone providers.
+
+Since Naive Bayes has been used successfully for e-mail spam filtering, it seems likely that it could also be applied to SMS spam. However, relative to e-mail spam, SMS spam poses additional challenges for automated filters.
+
+  1. SMS messages are often limited to 160 characters, reducing the amount of text that can be used to identify whether a message is junk.
+  2. The limit, combined with small mobile phone keyboards, has led many to adopt a form of SMS shorthand lingo, which further blurs the line between legitimate messages and spam.
+Let’s see how a simple Naive Bayes classifier handles these challenges.
+
+# Collecting data
+We will utilize the adapted SMS Spam dataset collected and developed in an article of the Proceedings of the 11th IEEE International Conference on Machine Learning and Applications in 2012.
+
+This dataset includes the text of **SMS messages** along with a **label** indicating whether the message is unwanted. Junk messages are labeled spam, while legitimate messages are labeled ham.
+
+Some examples of spam and ham are shown in the following:
+
+**Sample SMS ham**
+
+* Better. Made up for Friday and stuffed myself like a pig yesterday. Now I feel bleh. But, at least, its not writhing pain kind of bleh.
+
+* If he started searching, he will get job in few days. He has great potential and talent.
+
+* I got another job! The one at the hospital, doing data analysis or something, starts on Monday! Not sure when my thesis will finish.
+
+**Sample SMS spam**
+
+* Congratulations ur awarded 500 of CD vouchers or 125 gift guaranteed & Free entry 2 100 wkly draw txt MUSIC to 87066.
+
+* December only! Had your mobile 11mths+? You are entitled to update to the latest colour camera mobile for Free! Call The Mobile Update Co FREE on 08002986906.
+
+* Valentines Day Special! Win over £1000 in our quiz and take your partner on the trip of a lifetime! Send GO to 83600 now. 150 p/msg rcvd.
+
+**1. Looking at the previous real text messages, did you notice any distinguishing characteristics of spam? Explain.**
+
+After looking at the messege, some of the distinguishing characteristics of the spam examples are the use of **numbers** , the key word **free**, key word **wkly** or **mths**, the use of money characters **£**, the use of all capitalized words such as **FREE**, **GO**, **MUSIC**. 
+
+The Naive Bayes classifier will take advantage of any patterns in the word frequency to determine whether the SMS messages seem to better fit the profile of spam or ham.
+
+# Exploring and preparing the data
+## Exploring the data
+The first step towards constructing our classifier involves processing the raw data for analysis.
+
+Text data are challenging to prepare, because it is necessary to transform the words and sentences into a form that a computer can understand.
+
+We will transform our data into a representation known as bag-of-words, which ignores word order and simply provides a variable indicating whether the word appears at all.
+
+Let’s begin by importing the CSV data and saving it in a data frame:
+
+**2. Import and read the csv data file, name it sms_raw.**
+```{r}
+sms_raw <-read.csv('/Users/margaretconnor/NetBeansProjects/Rdata/sms_spam.csv', 
+                     stringsAsFactors = FALSE)
+```
+
+**3. Examine the structure of the sms_raw data frame.**
+```{r}
+str(sms_raw)
+```
+
+**4. Find the target variable. How many levels this variable have?**
+
+The target variable is type it has two levels 
+
+**5. Transform this target variable into factor. What is the number of observations in each level of the target variable?**
+```{r}
+sms_raw$type <- factor(sms_raw$type, levels = c("spam", "ham"))
+table(sms_raw$type)
+```
+
+# Cleaning and Standardizing text data
+SMS messages are strings of text composed of words, spaces, numbers, and punctuation.
+
+Handling this type of complex data takes a lot of thought and effort. You will need to consider how to remove numbers and punctuation; handle uninteresting words such as and, but, and or; and how to break apart sentences into individual words.
+
+Thankfully, this functionality has been provided by the members of the R community in a text mining package titled **tm**.
+
+**6. How to install and Load the tm package?**
+```{r}
+#install.packages("tm");
+library(tm);
+```
+
+The first step in processing text data involves creating a **corpus**, which is a collection of text documents. The documents can be short or long, from individual news articles, pages in a book or on the web, or entire books.
+
+In our case, the corpus will be a collection of SMS messages.
+
+In order to create a corpus, we’ll use the **VCorpus()** function in the tm package, which refers to a volatile corpus; volatile as it is stored in memory as opposed to being stored on disk (the PCorpus() function can be used to access a permanent corpus stored in a database).
+
+Since we already loaded the SMS message text into R, we’ll use the **VectorSource()** reader function to create a source object from the existing **sms_raw$text** vector and using the Corpus function as follow:
+
+sms_corpus <- Corpus(VectorSource(sms_raw$text));
+
+**7. Using the print function on the sms_corpus, how many documents this corpus have?**
+```{r}
+sms_corpus <- Corpus(VectorSource(sms_raw$text))
+print(sms_corpus)
+```
+
+Because the tm corpus is essentially a complex list, we can use list operations to select documents in the corpus.
+
+To receive a summary of specific messages, we can use the inspect() function with list operators. For example, the following command will view a summary of the first and second SMS messages in the corpus:
+
+inspect(sms_corpus[1:2]);
+
+To view the actual message text, the as.character() function must be applied to the desired messages. To view the first message:
+
+as.character(sms_corpus[[1]]);
+
+**8. How to view multiple documents/messages in the sms_corpus? Let’s say the first 3 documents text. (Tip use the lapply() function).**
+```{r}
+lapply(sms_corpus[1:3], as.character)
+```
+
+In order to perform our analysis, we need to divide the messages in the sms_corpus into individual words.
+
+But first, we need to clean the text, to standardize the words, by removing punctuation and other characters that clutter the result.
+
+The tm_map() function provides a method to apply a transformation to a tm corpus
+
+We will use this function to clean up our corpus using a series of transformations and save the result in a new object called **corpus_clean**.
+
+A. We will start with standardize the messages to use only lowercase characters. R provides a **tolower()** function that returns a lowercase version of text strings. In order to apply this function to the corpus, we need to use the tm_map() function as follows:
+
+corpus_clean <- tm_map(sms_corpus, tolower);
+
+**9. To check whether the command worked, let’s inspect the first message in the original corpus and compare it to the same in the transformed corpus. How to check those results?**
+```{r}
+corpus_clean <- tm_map(sms_corpus, tolower)
+as.character(sms_corpus[[1]])
+as.character(corpus_clean[[1]])
+```
+
+B. Let’s continue our cleanup by removing numbers from the SMS messages. Although some numbers may provide useful information, the majority would likely be unique to individual senders and thus will not provide useful patterns across all messages. Let’s strip all the numbers from the corpus using the removeNumbers() function.
+
+10. Write the code to remove numbers. (Tip similar to the lower case)
+```{r}
+corpus_clean <- tm_map(corpus_clean, removeNumbers)
+```
+
+C. Our next task is to remove filler words such as **to, and, but**, and **or** from our SMS messages. These terms are known as stop words and are typically removed prior to text mining. This is because although they appear very frequently, they do not provide much useful information for machine learning.
+
+Rather than define a list of stop words ourselves, we’ll use the **stopwords()** function provided by the tm package after the **removeWords()** function as follow:
+
+corpus_clean <- tm_map(corpus_clean, removeWords, stopwords());
+```{r}
+corpus_clean <- tm_map(corpus_clean, removeWords, stopwords())
+```
+
+D. Continuing with our cleanup process, we can also eliminate any punctuation from the text messages using the built-in removePunctuation() transformation from the tm package.
+
+11. Write the appropriate code that remove punctuation using the tm_map() function.
+```{r}
+corpus_clean <- tm_map(corpus_clean, removePunctuation)
+```
+
+E. Another common standardization for text data involves reducing words to their root form in a process called **stemming**.
+
+The stemming process takes words like learned, learning, and learns, and strips the suffix to transform them into the base form, learn.
+
+This allows machine learning algorithms to treat the related terms as a single concept rather than attempting to learn a pattern for each variant.
+
+The tm package provides stemming functionality via integration with the **SnowballC** package. Install and load the **SnowballC** package.
+
+The SnowballC package provides a **wordStem()** function, which for a character vector, returns the same vector of terms in its root form. For example, the function correctly stems the variants of the word learn, as follow:
+
+library(SnowballC)
+
+wordStem(c(“learn”, “learned”, “learning”, “learns”));
+
+In order to apply the wordStem() function to an entire corpus of text documents, the tm package includes a **stemDocument()** transformation. We apply this to our corpus with the tm_map() function exactly as done earlier:
+
+corpus_clean <- tm_map(corpus_clean, stemDocument);
+```{r}
+#install.packages("SnowballC")
+library(SnowballC)
+corpus_clean <- tm_map(corpus_clean, stemDocument)
+```
+
+F. After removing numbers, stop words, and punctuation as well as performing stemming, the text messages are left with the blank spaces that previously separated the now-missing pieces.
+
+The final step in our text cleanup process is to remove additional whitespace, using the built-in **stripWhitespace()** transformation:
+
+corpus_clean <- tm_map(corpus_clean, stripWhitespace);
+```{r}
+corpus_clean <- tm_map(corpus_clean, stripWhitespace);
+```
+
+**12. Check if the cleaning is working correctely by comparing the 5th document before and after cleaning.**
+```{r}
+as.character(sms_corpus[[5]])
+as.character(corpus_clean[[5]])
+```
+#splitting text documents into words
+Now that the data are processed to our liking, the final step is to split the messages into individual components through a process called **tokenization**. A token is a single element of a text string; in this case, the tokens are words.
+
+As you might assume, the tm package provides functionality to tokenize the SMS message corpus. The **DocumentTermMatrix()** function will take a corpus and create a data structure called a **Document Term Matrix (DTM)** in which rows indicate documents (SMS messages) and columns indicate terms (words). Each cell in the matrix stores a number indicating a count of the times the word represented by the column appears in the document represented by the row.
+
+Creating a DTM sparse matrix, given a tm corpus, involves a single command:
+```{r}
+sms_dtm <- DocumentTermMatrix(corpus_clean)
+```
+
+There is an easy and fast way to do all the previous cleaning and preprocessing by providing a list of control parameter options to override the defaults into DTM directly from the raw, unprocessed SMS corpus, we can use the following command:
+
+```{r}
+sms_dtm2 <- DocumentTermMatrix(sms_corpus, control = list(tolower = TRUE, removeNumbers = TRUE, stopwords = TRUE, removePunctuation = TRUE, stemming = TRUE));
+```
+
+The differences between these two cases illustrate an important principle of cleaning text data: the order of operations matters. It is very important to think through how early steps in the process are going to affect later ones.
+
+# creating training and test datasets
+With our data prepared for analysis, we now need to split the data into training and test datasets, so that once our spam classifier is built, it can be evaluated on data it has not previously seen.
+
+We’ll divide the data into two portions: 80 percent for training and 20 percent for testing. Since the SMS messages are sorted in a random order, we can simply take the first 4447 for training and leave the remaining 1112 for testing.
+
+**13. Split the sms_dtm into training and test sets. Name the first sms_dtm_train and the second sms_dtm_test.**
+```{r}
+sms_dtm
+sms_dtm_train <- sms_dtm[1:4447,]
+sms_dtm_test <- sms_dtm[4448:5559,]
+```
+
+**14. Store the correspondents target variable in 2 separate vectors. Name it sms_train_labels and sms_test_labels.**
+```{r}
+sms_train_labels <- sms_raw[1:4447, 1]
+sms_test_labels <- sms_raw[4448:5559, 1]
+```
+
+To confirm that the subsets are representative of the complete set of SMS data, let’s compare the proportion of spam in the training and test data frames:
+
+```{r}
+prop.table(table(sms_train_labels))
+
+prop.table(table(sms_test_labels))
+```
+
+#Word clouds
+A word cloud is a way to visually depict the frequency at which words appear in text data. The cloud is composed of words scattered somewhat randomly around the figure. Words appearing more often in the text are shown in a larger font, while fewer common terms are shown in smaller fonts.
+
+The **wordcloud** package provides a simple R function to create this type of diagrams. We’ll use it to visualize the types of words in SMS messages, as comparing the clouds for spam and ham will help us gauge whether our Naive Bayes spam filter is likely to be successful.
+
+If you haven’t already done so, install and load the package by typing install.packages(“wordcloud”) and library(wordcloud) at the R command line.
+```{r}
+library(wordcloud)
+```
+
+**15. Create word cloud of the clean corpus using the min.freq= 50 and the random.order = FALSE.**
+```{r}
+wordcloud(words = corpus_clean, min.freq = 50,
+          max.words=200, random.order=FALSE)
+```
+
+A perhaps more interesting visualization involves comparing the clouds for SMS spam and ham.
+
+Since we did not construct separate corpora for spam and ham, this is an appropriate time to note a very helpful feature of the wordcloud() function. Given a vector of raw text strings, it will automatically apply common text preparation processes before displaying the cloud.
+
+Let’s use R’s subset() function to take a subset of the sms_raw data by the SMS type. First, we’ll create a subset where the message type is spam:
+```{r}
+spam <- subset(sms_raw, type == "spam")
+```
+
+Next, we’ll do the same thing for the ham subset:
+
+```{r}
+ham <- subset(sms_raw, type == "ham")
+```
+We now have two data frames, spam and ham, each with a text feature containing the raw text strings for SMSes. Creating word clouds is as simple as before. We’ll use the max.words parameter to look at the 40 most common words in each of the two sets. The scale parameter allows us to adjust the maximum and minimum font size for words in the cloud.
+
+```{r}
+wordcloud(spam$text, max.words = 40, scale = c(3, 0.5))
+
+wordcloud(ham$text, max.words = 40, scale = c(3, 0.5))
+```
+
+**16. What information those 2 word clouds, the spam and ham cloud, are providing?**
+
+These wordclouds are illistrating the single words that appear most in their level, so we begin to understand that the probability the word **call** or **free** will appear in a spam text is high. From here we can extrapolate future events using the Naive Baye's Algorithm.
+
+# Creating indicator features for frequent words
+The final step in the data preparation process is to transform the sparse matrix into a data structure that can be used to train a Naive Bayes classifier.
+
+Currently, the sparse matrix includes over 6,500 features; this is a feature for every word that appears in at least one SMS message. It’s unlikely that all of these are useful for classification. To reduce the number of features, we will eliminate any word that appear in less than five SMS messages, or in less than about 0.1 percent of the records in the training data.
+
+Finding frequent words requires use of the **findFreqTerms() **function in the tm package. This function takes a DTM and returns a character vector containing the words that appear for at least the specified number of times. The following command will display the words appearing at least five times in the sms_dtm_train matrix:
+
+sms_freq_words <- findFreqTerms(sms_dtm_train, 5);
+
+**17. Look into the structure of sms_freq_words. How many terms appear in at least 5 SMS messages?**
+```{r}
+sms_freq_words <- findFreqTerms(sms_dtm_train, 5)
+# 1249 terms
+str(sms_freq_words)
+```
+
+We now need to filter our DTM to include only the terms appearing in a specified vector. Since we want all the rows, but only the columns representing the words in the sms_freq_words vector, our commands are:
+
+```{r}
+sms_dtm_freq_train<- sms_dtm_train[ , sms_freq_words]
+
+sms_dtm_freq_test <- sms_dtm_test[ , sms_freq_words]
+```
+
+The training and test datasets now include features, which correspond to words appearing in at least five messages.
+
+The Naive Bayes classifier is typically trained on data with categorical features. This poses a problem, since the cells in the sparse matrix are numeric and measure the number of times a word appears in a message.
+
+We need to change this to a categorical variable that simply indicates yes or no depending on whether the word appears at all.
+
+The following defines a **convert_counts()** function to convert counts to Yes/No strings:
+
+```{r}
+convert_counts <- function(x) { x <- ifelse(x > 0, "Yes", "No"); }
+```
+
+We now need to apply **convert_counts()** to each of the columns in our sparse matrix. The function is simply called **apply()** and is used much like lapply() was used previously.
+
+The apply() function allows a function to be used on each of the rows or columns in a matrix. It uses a MARGIN parameter to specify either rows or columns. Here, we’ll use MARGIN = 2, since we’re interested in the columns (MARGIN = 1 is used for rows). The commands to convert the training and test matrices are as follows:
+```{r}
+sms_train <- apply(sms_dtm_freq_train, MARGIN = 2,convert_counts)
+
+sms_test <- apply(sms_dtm_freq_test, MARGIN = 2,convert_counts)
+```
+The result will be two-character type matrixes, each with cells indicating “Yes” or “No” for whether the word represented by the column appears at any point in the message represented by the row.
+
+#Training a model on the data
+Now that we have transformed the raw SMS messages into a format that can be represented by a statistical model, it is time to apply the Naive Bayes algorithm.
+
+The algorithm will use the presence or absence of words to estimate the probability that a given SMS message is spam.
+
+The Naive Bayes implementation we will employ is in the e1071 package. Install and load the package using the install.packages(“e1071”) and library(e1071) commands.
+
+Unlike the k-NN algorithm a Naive Bayes learner is trained and used for classification in separate stages.
+
+**18. Build the model on the sms_train matrix using the naive bayes classifier as described in the lecture slides.**
+```{r}
+library(e1071)
+sms_classifier = naiveBayes(sms_train, sms_train_labels, laplace = 0);
+```
+
+The sms_classifier now contains a naiveBayes classifier object that can be used to make predictions.
+
+# Evaluating model performance
+To evaluate the SMS classifier, we need to test its predictions on unseen messages in the test data.
+
+Recall that the unseen message features are stored in a matrix named sms_test, while the class labels (spam or ham) are stored in a vector named sms_test_labels.
+
+The classifier that we trained has been named sms_classifier. We will use this classifier to generate predictions and then compare the predicted values to the true values.
+
+The **predict()** function is used to make the predictions. We will store these in a vector named **sms_test_pred**. We will simply supply the function with the names of our classifier and test dataset, as shown:
+
+```{r}
+sms_test_pred <- predict(sms_classifier, sms_test)
+```
+
+We will use the CrossTable() function in the gmodels package to compare the predictions to the true values. This time, we’ll add some additional parameters to eliminate unnecessary cell proportions and use the dnn parameter (dimension names) to relabel the rows and columns, as shown in the following code:
+
+```{r}
+library(gmodels);
+CrossTable( sms_test_labels,sms_test_pred, prop.chisq = FALSE, prop.t = FALSE, prop.r = FALSE, dnn = c('actual', 'predicted'))
+```
+
+**19. Discuss and explain the result of this crossTable.**
+
+In the cross table we see that the prediction incorrecly categorized 21 instance. This is an approximate 1.89% error meaning we have a sucess rate of 98.11%.
+
+Improving model performance
+**20. Re-build a Naive Bayes model as done earlier, but this time set laplace = 1 by adding it to the classifier, name it sms_classifier2, and recreate the CrossTable.**
+```{r}
+sms_classifier2 = naiveBayes(sms_train, sms_train_labels, laplace = 1)
+sms_test_pred2 <- predict(sms_classifier2, sms_test)
+CrossTable( sms_test_labels,sms_test_pred2, prop.chisq = FALSE, prop.t = FALSE, prop.r = FALSE, dnn = c('actual', 'predicted'))
+```
+
+**21. Did Laplace estimator improve the result of Naive Bayes classifier?**
+
+Using the Laplace estimator increases the performance from 98.11% to 98.38%. It only prevented incorrect categorization in one instance, but it is an improvement.

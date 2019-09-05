@@ -1,0 +1,23 @@
+[21:25:06] connorbg@uw1-320-15: ~/U/css430/p3 $ java Boot
+threadOS ver 1.0:
+Type ? for help
+threadOS: a new thread (thread=Thread[Thread-3,2,main] tid=0 pid=-1)
+-->l Shell
+l Shell
+threadOS: a new thread (thread=Thread[Thread-5,2,main] tid=1 pid=0)
+shell[1]% Test2
+Test2
+threadOS: a new thread (thread=Thread[Thread-7,2,main] tid=2 pid=1)
+threadOS: a new thread (thread=Thread[Thread-9,2,main] tid=3 pid=2)
+threadOS: a new thread (thread=Thread[Thread-11,2,main] tid=4 pid=2)
+threadOS: a new thread (thread=Thread[Thread-13,2,main] tid=5 pid=2)
+threadOS: a new thread (thread=Thread[Thread-15,2,main] tid=6 pid=2)
+threadOS: a new thread (thread=Thread[Thread-17,2,main] tid=7 pid=2)
+Thread[b]: response time = 3980 turnaround time = 4981 execution time = 1001
+Thread[e]: response time = 6980 turnaround time = 7480 execution time = 500
+Thread[c]: response time = 4981 turnaround time = 7983 execution time = 3002
+Thread[a]: response time = 2980 turnaround time = 7984 execution time = 5004
+Thread[d]: response time = 5980 turnaround time = 11985 execution time = 6005
+shell[2]% exit
+exit
+-->

@@ -1,0 +1,106 @@
+---
+title: "Assignment03"
+author: "Margaret Connor"
+date: "2/9/2019"
+output: html_document
+---
+Begining assignment 3 by importing the required functions and data from Lab 3
+```{r}
+#import data and function from lab 3 with some simplifications
+wiscData <-read.csv('/Users/margaretconnor/NetBeansProjects/Rdata/wisc_bc_data.csv', 
+                     stringsAsFactors = TRUE)
+#drop the id feature from the analysis
+wiscData <- wiscData[-1]
+
+#change names for factors
+levels(wiscData$diagnosis) <- c("Benign","Malignant")
+
+#create normalized data set
+normalize <- function(x) {
+  return ((x - min(x)) / (max(x) - min(x)));
+}
+wiscData_n <- as.data.frame(lapply(wiscData[2:31], normalize));
+
+#data set normalized
+wiscData_train <- wiscData_n[1:469, ]
+wiscData_test <- wiscData_n[470:569, ]
+
+#data set target variables
+wiscData_train_target <- wiscData[1:469, 1]
+wiscData_test_target <- wiscData[470:569, 1]
+
+#knn import
+library(class);
+wiscData_test_pred <- knn(train = wiscData_train, test = wiscData_test,
+                      cl = wiscData_train_target, k=21);
+#cross table
+library(gmodels)
+CrossTable(x = wiscData_test_target, y = wiscData_test_pred,
+           prop.chisq=FALSE);
+```
+###Step 1. Answer the following:
+
+#####1. How can you improve the performance of your knn model? list two ways.
+Two ways to improve our K-nn model includes rescaling the numerical features using z-score standardization and testing several K values choosing the K value that delivers the best classification performance.
+
+#####2. Apply those 2 different ways of improvements.
+Implementation of z-score standardization 
+```{r}
+wiscData_z <- as.data.frame(scale(wiscData[-1])) 
+
+# confirm that the transformation was applied correctly 
+summary(wiscData_z$area_mean) 
+wiscData_train <- wiscData_z[1:469, ] 
+wiscData_test <- wiscData_z[470:569, ] 
+
+# compare z-score results with target
+wiscData_test_pred <- knn(train = wiscData_train, test = wiscData_test, 
+                       cl = wiscData_train_target, k=21) 
+
+# Create the cross tabulation of predicted vs. actual 
+CrossTable(x = wiscData_test_target, y = wiscData_test_pred, 
+            prop.chisq=FALSE) 
+
+
+```
+
+Implementation of alternative values of k  
+
+```{r, echo=TRUE} 
+
+#Return the data set to the normalized data (not z-score)
+wiscData_train <- wiscData_n[1:469, ] 
+wiscData_test <- wiscData_n[470:569, ] 
+#k = 21 (defalt an odd number roughly equal to the square root of 469)
+wiscData_test_pred <- knn(train = wiscData_train, test = wiscData_test, cl = wiscData_train_target, k=21) 
+CrossTable(x = wiscData_test_target, y = wiscData_test_pred, prop.chisq=FALSE)$t 
+
+#k = 1
+wiscData_test_pred <- knn(train = wiscData_train, test = wiscData_test, cl = wiscData_train_target, k=1) 
+CrossTable(x = wiscData_test_target, y = wiscData_test_pred, prop.chisq=FALSE)$t; 
+#k = 8
+wiscData_test_pred <- knn(train = wiscData_train, test = wiscData_test, cl = wiscData_train_target, k=8) 
+CrossTable(x = wiscData_test_target, y = wiscData_test_pred, prop.chisq=FALSE)$t 
+#k = 16
+wiscData_test_pred <- knn(train = wiscData_train, test = wiscData_test, cl = wiscData_train_target, k=16) 
+CrossTable(x = wiscData_test_target, y = wiscData_test_pred, prop.chisq=FALSE)$t 
+#k = 24
+wiscData_test_pred <- knn(train = wiscData_train, test = wiscData_test, cl = wiscData_train_target, k=24) 
+CrossTable(x = wiscData_test_target, y = wiscData_test_pred, prop.chisq=FALSE)$t 
+#k = 31
+wiscData_test_pred <- knn(train = wiscData_train, test = wiscData_test, cl = wiscData_train_target, k=31) 
+CrossTable(x = wiscData_test_target, y = wiscData_test_pred, prop.chisq=FALSE)$t 
+#k = 39
+wiscData_test_pred <- knn(train = wiscData_train, test = wiscData_test, cl = wiscData_train_target, k=39) 
+CrossTable(x = wiscData_test_target, y = wiscData_test_pred, prop.chisq=FALSE)$t 
+``` 
+
+#####3. Discuss and explain each improvement separately. Which improvement give the best results?
+
+**Z-score standardization** is the process of rescaling each feature's values in terms of how many standard deviations they fall from the mean. We use the z-score standardization assuming that future examples will have similar mean and standard deviation as the training examples here.
+
+After applying the z-score standardization the results are actully less acurate, at 95%, than they were before the z-score standardizations, at 98%. The results failed to improve the accuracy of false negatives making this an unimprovement of the K-nn model.
+
+**Testing additional K values** allows us to test for the most efficient value of K to produce a small margin of error, when that K value is found we will apply that to future examples under the assumption that it will still continue to produce the smallest margin of error.
+
+Just like the z-score standardization the additional K values failed to propperly improve the k-nn model as all result were equal to or worst in accuracy. The model with k=1 was the closest to the original results, slightly improving the rate of false negatives by increasing the rate of false positives.

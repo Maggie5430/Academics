@@ -1,0 +1,6 @@
+f(x) = 3 * x^^6 + 10 * x^^5 + 23 * x^^4 + 1 * x^^3 + 4 * x^^2 + 2 * x^^1 + 5
+Enter X coordinate 1
+space = 14.2786
+Enter X coordinate 2
+space = 337.39
+Enter X coordinate 0.0

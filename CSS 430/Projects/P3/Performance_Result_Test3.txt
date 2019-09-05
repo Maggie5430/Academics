@@ -1,0 +1,43 @@
+//Kernel.java
+[19:26:51] connorbg@uw1-320-13: ~/U/css430/p3 $ java Boot
+threadOS ver 1.0:
+Type ? for help
+threadOS: a new thread (thread=Thread[Thread-3,2,main] tid=0 pid=-1)
+-->l Test3 3
+l Test3 3
+threadOS: a new thread (thread=Thread[Thread-19,2,main] tid=8 pid=0)
+threadOS: a new thread (thread=Thread[Thread-21,2,main] tid=9 pid=8)
+threadOS: a new thread (thread=Thread[Thread-23,2,main] tid=10 pid=8)
+threadOS: a new thread (thread=Thread[Thread-25,2,main] tid=11 pid=8)
+threadOS: a new thread (thread=Thread[Thread-27,2,main] tid=12 pid=8)
+threadOS: a new thread (thread=Thread[Thread-29,2,main] tid=13 pid=8)
+threadOS: a new thread (thread=Thread[Thread-31,2,main] tid=14 pid=8)
+comp finished...
+comp finished...
+comp finished...
+disk finished...
+disk finished...
+disk finished...
+elapsed time = 86437 msec.
+
+//Kernel.old
+[19:32:24] connorbg@uw1-320-13: ~/U/css430/p3 $ java Boot
+threadOS ver 1.0:
+Type ? for help
+threadOS: a new thread (thread=Thread[Thread-3,2,main] tid=0 pid=-1)
+-->l Test3 3
+l Test3 3
+threadOS: a new thread (thread=Thread[Thread-5,2,main] tid=1 pid=0)
+threadOS: a new thread (thread=Thread[Thread-7,2,main] tid=2 pid=1)
+threadOS: a new thread (thread=Thread[Thread-9,2,main] tid=3 pid=1)
+threadOS: a new thread (thread=Thread[Thread-11,2,main] tid=4 pid=1)
+threadOS: a new thread (thread=Thread[Thread-13,2,main] tid=5 pid=1)
+threadOS: a new thread (thread=Thread[Thread-15,2,main] tid=6 pid=1)
+threadOS: a new thread (thread=Thread[Thread-17,2,main] tid=7 pid=1)
+comp finished...
+comp finished...
+comp finished...
+disk finished...
+disk finished...
+disk finished...
+elapsed time = 89001 msec.

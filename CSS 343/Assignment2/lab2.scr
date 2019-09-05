@@ -1,0 +1,807 @@
+Script started on Sun 03 Feb 2019 03:48:33 AM PST
+]0;connorbg@uw1-320-11: ~/U/css343/343ass2[01;32mconnorbg@uw1-320-11[00m:[01;34m~/U/css343/343ass2[00m$ exitamples.desktopls[Kexit[1Ppwd[1Pdccdls[K[Kg++ [2Phig++ lab2.cpp bintree.cpp nd[Kodedata.cc[Kpp
+]0;connorbg@uw1-320-11: ~/U/css343/343ass2[01;32mconnorbg@uw1-320-11[00m:[01;34m~/U/css343/343ass2[00m$ a.[K[K./a.out
+Initial data:
+  iii not tttt eee r not and jj r eee pp r sssss eee not tttt ooo ff m m y z $$ 
+Tree Inorder:
+andeeeffiiijjmnotooopprsssssttttyz                        z
+                    y
+                tttt
+                        sssss
+                    r
+                        pp
+                            ooo
+            not
+                    m
+                jj
+        iii
+                ff
+            eee
+                and
+Retrieve --> and:  found
+Retrieve --> not:  found
+Retrieve --> sss:  not found
+Height    --> and:  3
+Height    --> not:  2
+Height    --> sss:  0
+Height    --> tttt:  3
+Height    --> ooo:  6
+Height    --> y:  4
+T == T2?     not equal
+T != first?  not equal
+T == dup?    not equal
+                    z
+                y
+                    tttt
+            sssss
+                    r
+                pp
+                    ooo
+        not
+                    m
+                jj
+                    iii
+            ff
+                    eee
+                and
+---------------------------------------------------------------
+Initial data:
+  b a c b a c $$ 
+Tree Inorder:
+abc            c
+        b
+            a
+Retrieve --> and:  not found
+Retrieve --> not:  not found
+Retrieve --> sss:  not found
+Height    --> and:  0
+Height    --> not:  0
+Height    --> sss:  0
+Height    --> tttt:  0
+Height    --> ooo:  0
+Height    --> y:  0
+T == T2?     not equal
+T != first?  not equal
+T == dup?    not equal
+            c
+        b
+            a
+---------------------------------------------------------------
+Initial data:
+  c b a $$ 
+Tree Inorder:
+abc        c
+            b
+                a
+Retrieve --> and:  not found
+Retrieve --> not:  not found
+Retrieve --> sss:  not found
+Height    --> and:  0
+Height    --> not:  0
+Height    --> sss:  0
+Height    --> tttt:  0
+Height    --> ooo:  0
+Height    --> y:  0
+T == T2?     not equal
+T != first?  not equal
+T == dup?    not equal
+            c
+        b
+            a
+---------------------------------------------------------------
+Initial data:
+   
+]0;connorbg@uw1-320-11: ~/U/css343/343ass2[01;32mconnorbg@uw1-320-11[00m:[01;34m~/U/css343/343ass2[00m$ valgrind a.[K[K./a.out
+==21257== Memcheck, a memory error detector
+==21257== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==21257== Using Valgrind-3.11.0 and LibVEX; rerun with -h for copyright info
+==21257== Command: ./a.out
+==21257== 
+Initial data:
+  iii not tttt eee r not and jj r eee pp r sssss eee not tttt ooo ff m m y z $$ 
+==21257== Invalid write of size 8
+==21257==    at 0x4025B6: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402566: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402566: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40252C: BinTree::makeEmpty() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4025EB: BinTree::operator=(BinTree const&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401905: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==  Address 0x5abacf0 is 0 bytes inside a block of size 24 free'd
+==21257==    at 0x4C2F24B: operator delete(void*) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==21257==    by 0x4025AE: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402566: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402566: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40252C: BinTree::makeEmpty() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4025EB: BinTree::operator=(BinTree const&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401905: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==  Block was alloc'd at
+==21257==    at 0x4C2E0EF: operator new(unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==21257==    by 0x402644: BinTree::copyHelper(BinTree::Node*&, BinTree::Node*) const (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4026C8: BinTree::copyHelper(BinTree::Node*&, BinTree::Node*) const (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4026C8: BinTree::copyHelper(BinTree::Node*&, BinTree::Node*) const (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40261C: BinTree::operator=(BinTree const&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4018F0: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257== 
+==21257== Invalid write of size 8
+==21257==    at 0x4025B6: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402580: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402566: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40252C: BinTree::makeEmpty() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4025EB: BinTree::operator=(BinTree const&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401905: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==  Address 0x5abadb0 is 0 bytes inside a block of size 24 free'd
+==21257==    at 0x4C2F24B: operator delete(void*) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==21257==    by 0x4025AE: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402580: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402566: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40252C: BinTree::makeEmpty() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4025EB: BinTree::operator=(BinTree const&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401905: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==  Block was alloc'd at
+==21257==    at 0x4C2E0EF: operator new(unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==21257==    by 0x402644: BinTree::copyHelper(BinTree::Node*&, BinTree::Node*) const (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4026F7: BinTree::copyHelper(BinTree::Node*&, BinTree::Node*) const (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4026C8: BinTree::copyHelper(BinTree::Node*&, BinTree::Node*) const (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40261C: BinTree::operator=(BinTree const&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4018F0: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257== 
+==21257== Invalid write of size 8
+==21257==    at 0x4025B6: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402566: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40252C: BinTree::makeEmpty() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4025EB: BinTree::operator=(BinTree const&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401905: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==  Address 0x5abac30 is 0 bytes inside a block of size 24 free'd
+==21257==    at 0x4C2F24B: operator delete(void*) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==21257==    by 0x4025AE: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402566: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40252C: BinTree::makeEmpty() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4025EB: BinTree::operator=(BinTree const&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401905: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==  Block was alloc'd at
+==21257==    at 0x4C2E0EF: operator new(unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==21257==    by 0x402644: BinTree::copyHelper(BinTree::Node*&, BinTree::Node*) const (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4026C8: BinTree::copyHelper(BinTree::Node*&, BinTree::Node*) const (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40261C: BinTree::operator=(BinTree const&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4018F0: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257== 
+==21257== Invalid write of size 8
+==21257==    at 0x4025B6: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402580: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402566: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402580: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40252C: BinTree::makeEmpty() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4025EB: BinTree::operator=(BinTree const&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401905: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==  Address 0x5abaff0 is 0 bytes inside a block of size 24 free'd
+==21257==    at 0x4C2F24B: operator delete(void*) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==21257==    by 0x4025AE: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402580: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402566: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402580: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40252C: BinTree::makeEmpty() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4025EB: BinTree::operator=(BinTree const&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401905: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==  Block was alloc'd at
+==21257==    at 0x4C2E0EF: operator new(unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==21257==    by 0x402644: BinTree::copyHelper(BinTree::Node*&, BinTree::Node*) const (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4026F7: BinTree::copyHelper(BinTree::Node*&, BinTree::Node*) const (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4026C8: BinTree::copyHelper(BinTree::Node*&, BinTree::Node*) const (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4026F7: BinTree::copyHelper(BinTree::Node*&, BinTree::Node*) const (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40261C: BinTree::operator=(BinTree const&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4018F0: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257== 
+==21257== Invalid write of size 8
+==21257==    at 0x4025B6: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402566: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402580: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40252C: BinTree::makeEmpty() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4025EB: BinTree::operator=(BinTree const&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401905: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==  Address 0x5abaf30 is 0 bytes inside a block of size 24 free'd
+==21257==    at 0x4C2F24B: operator delete(void*) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==21257==    by 0x4025AE: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402566: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402580: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40252C: BinTree::makeEmpty() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4025EB: BinTree::operator=(BinTree const&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401905: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==  Block was alloc'd at
+==21257==    at 0x4C2E0EF: operator new(unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==21257==    by 0x402644: BinTree::copyHelper(BinTree::Node*&, BinTree::Node*) const (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4026C8: BinTree::copyHelper(BinTree::Node*&, BinTree::Node*) const (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4026F7: BinTree::copyHelper(BinTree::Node*&, BinTree::Node*) const (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40261C: BinTree::operator=(BinTree const&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4018F0: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257== 
+==21257== Invalid write of size 8
+==21257==    at 0x4025B6: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402566: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402566: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402566: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402580: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402580: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40252C: BinTree::makeEmpty() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4025EB: BinTree::operator=(BinTree const&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401905: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==  Address 0x5abb2f0 is 0 bytes inside a block of size 24 free'd
+==21257==    at 0x4C2F24B: operator delete(void*) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==21257==    by 0x4025AE: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402566: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402566: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402566: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402580: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402580: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40252C: BinTree::makeEmpty() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4025EB: BinTree::operator=(BinTree const&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401905: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==  Block was alloc'd at
+==21257==    at 0x4C2E0EF: operator new(unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==21257==    by 0x402644: BinTree::copyHelper(BinTree::Node*&, BinTree::Node*) const (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4026C8: BinTree::copyHelper(BinTree::Node*&, BinTree::Node*) const (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4026C8: BinTree::copyHelper(BinTree::Node*&, BinTree::Node*) const (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4026C8: BinTree::copyHelper(BinTree::Node*&, BinTree::Node*) const (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4026F7: BinTree::copyHelper(BinTree::Node*&, BinTree::Node*) const (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4026F7: BinTree::copyHelper(BinTree::Node*&, BinTree::Node*) const (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40261C: BinTree::operator=(BinTree const&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4018F0: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257== 
+==21257== Invalid write of size 8
+==21257==    at 0x4025B6: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402566: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402566: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402580: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402580: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40252C: BinTree::makeEmpty() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4025EB: BinTree::operator=(BinTree const&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401905: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==  Address 0x5abb230 is 0 bytes inside a block of size 24 free'd
+==21257==    at 0x4C2F24B: operator delete(void*) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==21257==    by 0x4025AE: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402566: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402566: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402580: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402580: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40252C: BinTree::makeEmpty() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4025EB: BinTree::operator=(BinTree const&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401905: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==  Block was alloc'd at
+==21257==    at 0x4C2E0EF: operator new(unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==21257==    by 0x402644: BinTree::copyHelper(BinTree::Node*&, BinTree::Node*) const (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4026C8: BinTree::copyHelper(BinTree::Node*&, BinTree::Node*) const (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4026C8: BinTree::copyHelper(BinTree::Node*&, BinTree::Node*) const (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4026F7: BinTree::copyHelper(BinTree::Node*&, BinTree::Node*) const (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4026F7: BinTree::copyHelper(BinTree::Node*&, BinTree::Node*) const (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40261C: BinTree::operator=(BinTree const&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4018F0: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257== 
+==21257== Invalid write of size 8
+==21257==    at 0x4025B6: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402566: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402580: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402580: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40252C: BinTree::makeEmpty() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4025EB: BinTree::operator=(BinTree const&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401905: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==  Address 0x5abb170 is 0 bytes inside a block of size 24 free'd
+==21257==    at 0x4C2F24B: operator delete(void*) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==21257==    by 0x4025AE: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402566: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402580: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402580: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40252C: BinTree::makeEmpty() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4025EB: BinTree::operator=(BinTree const&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401905: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==  Block was alloc'd at
+==21257==    at 0x4C2E0EF: operator new(unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==21257==    by 0x402644: BinTree::copyHelper(BinTree::Node*&, BinTree::Node*) const (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4026C8: BinTree::copyHelper(BinTree::Node*&, BinTree::Node*) const (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4026F7: BinTree::copyHelper(BinTree::Node*&, BinTree::Node*) const (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4026F7: BinTree::copyHelper(BinTree::Node*&, BinTree::Node*) const (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40261C: BinTree::operator=(BinTree const&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4018F0: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257== 
+==21257== Invalid write of size 8
+==21257==    at 0x4025B6: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402580: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402580: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402580: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402580: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40252C: BinTree::makeEmpty() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4025EB: BinTree::operator=(BinTree const&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401905: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==  Address 0x5abb530 is 0 bytes inside a block of size 24 free'd
+==21257==    at 0x4C2F24B: operator delete(void*) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==21257==    by 0x4025AE: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402580: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402580: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402580: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402580: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40252C: BinTree::makeEmpty() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4025EB: BinTree::operator=(BinTree const&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401905: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==  Block was alloc'd at
+==21257==    at 0x4C2E0EF: operator new(unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==21257==    by 0x402644: BinTree::copyHelper(BinTree::Node*&, BinTree::Node*) const (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4026F7: BinTree::copyHelper(BinTree::Node*&, BinTree::Node*) const (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4026F7: BinTree::copyHelper(BinTree::Node*&, BinTree::Node*) const (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4026F7: BinTree::copyHelper(BinTree::Node*&, BinTree::Node*) const (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4026F7: BinTree::copyHelper(BinTree::Node*&, BinTree::Node*) const (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40261C: BinTree::operator=(BinTree const&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4018F0: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257== 
+==21257== Invalid write of size 8
+==21257==    at 0x4025B6: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402580: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402580: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40252C: BinTree::makeEmpty() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4025EB: BinTree::operator=(BinTree const&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401905: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==  Address 0x5abb0b0 is 0 bytes inside a block of size 24 free'd
+==21257==    at 0x4C2F24B: operator delete(void*) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==21257==    by 0x4025AE: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402580: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402580: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40252C: BinTree::makeEmpty() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4025EB: BinTree::operator=(BinTree const&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401905: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==  Block was alloc'd at
+==21257==    at 0x4C2E0EF: operator new(unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==21257==    by 0x402644: BinTree::copyHelper(BinTree::Node*&, BinTree::Node*) const (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4026F7: BinTree::copyHelper(BinTree::Node*&, BinTree::Node*) const (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4026F7: BinTree::copyHelper(BinTree::Node*&, BinTree::Node*) const (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40261C: BinTree::operator=(BinTree const&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4018F0: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257== 
+==21257== Invalid write of size 8
+==21257==    at 0x4025B6: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402580: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40252C: BinTree::makeEmpty() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4025EB: BinTree::operator=(BinTree const&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401905: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==  Address 0x5abae70 is 0 bytes inside a block of size 24 free'd
+==21257==    at 0x4C2F24B: operator delete(void*) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==21257==    by 0x4025AE: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402580: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40252C: BinTree::makeEmpty() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4025EB: BinTree::operator=(BinTree const&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401905: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==  Block was alloc'd at
+==21257==    at 0x4C2E0EF: operator new(unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==21257==    by 0x402644: BinTree::copyHelper(BinTree::Node*&, BinTree::Node*) const (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4026F7: BinTree::copyHelper(BinTree::Node*&, BinTree::Node*) const (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40261C: BinTree::operator=(BinTree const&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4018F0: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257== 
+==21257== Invalid write of size 8
+==21257==    at 0x4025B6: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40252C: BinTree::makeEmpty() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4025EB: BinTree::operator=(BinTree const&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401905: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==  Address 0x5abab70 is 0 bytes inside a block of size 24 free'd
+==21257==    at 0x4C2F24B: operator delete(void*) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==21257==    by 0x4025AE: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40252C: BinTree::makeEmpty() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4025EB: BinTree::operator=(BinTree const&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401905: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==  Block was alloc'd at
+==21257==    at 0x4C2E0EF: operator new(unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==21257==    by 0x402644: BinTree::copyHelper(BinTree::Node*&, BinTree::Node*) const (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40261C: BinTree::operator=(BinTree const&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4018F0: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257== 
+Tree Inorder:
+andeeeffiiijjmnotooopprsssssttttyz                        z
+                    y
+                tttt
+                        sssss
+                    r
+                        pp
+                            ooo
+            not
+                    m
+                jj
+        iii
+                ff
+            eee
+                and
+Retrieve --> and:  found
+Retrieve --> not:  found
+Retrieve --> sss:  not found
+Height    --> and:  3
+Height    --> not:  2
+Height    --> sss:  0
+Height    --> tttt:  3
+Height    --> ooo:  6
+Height    --> y:  4
+T == T2?     not equal
+T != first?  not equal
+T == dup?    not equal
+==21257== Invalid write of size 8
+==21257==    at 0x4025B6: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402566: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40252C: BinTree::makeEmpty() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402EE4: BinTree::bstreeToArray(NodeData**) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401D4C: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==  Address 0x5ab9610 is 0 bytes inside a block of size 24 free'd
+==21257==    at 0x4C2F24B: operator delete(void*) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==21257==    by 0x4025AE: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402566: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40252C: BinTree::makeEmpty() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402EE4: BinTree::bstreeToArray(NodeData**) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401D4C: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==  Block was alloc'd at
+==21257==    at 0x4C2E0EF: operator new(unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==21257==    by 0x40297F: BinTree::insertHelper(BinTree::Node*&, NodeData*) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402A1A: BinTree::insertHelper(BinTree::Node*&, NodeData*) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402952: BinTree::insert(NodeData*) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402328: buildTree(BinTree&, std::basic_ifstream<char, std::char_traits<char> >&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4018AF: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257== 
+==21257== Invalid write of size 8
+==21257==    at 0x4025B6: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402580: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40252C: BinTree::makeEmpty() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402EE4: BinTree::bstreeToArray(NodeData**) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401D4C: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==  Address 0x5ab9490 is 0 bytes inside a block of size 24 free'd
+==21257==    at 0x4C2F24B: operator delete(void*) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==21257==    by 0x4025AE: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402580: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40252C: BinTree::makeEmpty() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402EE4: BinTree::bstreeToArray(NodeData**) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401D4C: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==  Block was alloc'd at
+==21257==    at 0x4C2E0EF: operator new(unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==21257==    by 0x40297F: BinTree::insertHelper(BinTree::Node*&, NodeData*) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402A57: BinTree::insertHelper(BinTree::Node*&, NodeData*) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402952: BinTree::insert(NodeData*) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402328: buildTree(BinTree&, std::basic_ifstream<char, std::char_traits<char> >&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4018AF: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257== 
+==21257== Invalid write of size 8
+==21257==    at 0x4025B6: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40252C: BinTree::makeEmpty() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402EE4: BinTree::bstreeToArray(NodeData**) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401D4C: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==  Address 0x5ab93d0 is 0 bytes inside a block of size 24 free'd
+==21257==    at 0x4C2F24B: operator delete(void*) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==21257==    by 0x4025AE: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40252C: BinTree::makeEmpty() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402EE4: BinTree::bstreeToArray(NodeData**) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401D4C: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==  Block was alloc'd at
+==21257==    at 0x4C2E0EF: operator new(unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==21257==    by 0x40297F: BinTree::insertHelper(BinTree::Node*&, NodeData*) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402952: BinTree::insert(NodeData*) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402328: buildTree(BinTree&, std::basic_ifstream<char, std::char_traits<char> >&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4018AF: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257== 
+                    z
+                y
+                    tttt
+            sssss
+                    r
+                pp
+                    ooo
+        not
+                    m
+                jj
+                    iii
+            ff
+                    eee
+                and
+==21257== Invalid write of size 8
+==21257==    at 0x4025B6: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402580: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402566: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402566: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40252C: BinTree::makeEmpty() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401D83: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==  Address 0x5abd270 is 0 bytes inside a block of size 24 free'd
+==21257==    at 0x4C2F24B: operator delete(void*) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==21257==    by 0x4025AE: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402580: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402566: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402566: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40252C: BinTree::makeEmpty() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401D83: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==  Block was alloc'd at
+==21257==    at 0x4C2E0EF: operator new(unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==21257==    by 0x403085: BinTree::arrayToBSTreeHelper(BinTree::Node*&, NodeData**, int, int) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40317F: BinTree::arrayToBSTreeHelper(BinTree::Node*&, NodeData**, int, int) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x403158: BinTree::arrayToBSTreeHelper(BinTree::Node*&, NodeData**, int, int) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x403158: BinTree::arrayToBSTreeHelper(BinTree::Node*&, NodeData**, int, int) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40303A: BinTree::arrayToBSTree(NodeData**) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401D65: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257== 
+==21257== Invalid write of size 8
+==21257==    at 0x4025B6: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402566: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402580: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402566: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40252C: BinTree::makeEmpty() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401D83: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==  Address 0x5abd3f0 is 0 bytes inside a block of size 24 free'd
+==21257==    at 0x4C2F24B: operator delete(void*) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==21257==    by 0x4025AE: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402566: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402580: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402566: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40252C: BinTree::makeEmpty() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401D83: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==  Block was alloc'd at
+==21257==    at 0x4C2E0EF: operator new(unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==21257==    by 0x403085: BinTree::arrayToBSTreeHelper(BinTree::Node*&, NodeData**, int, int) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x403158: BinTree::arrayToBSTreeHelper(BinTree::Node*&, NodeData**, int, int) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40317F: BinTree::arrayToBSTreeHelper(BinTree::Node*&, NodeData**, int, int) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x403158: BinTree::arrayToBSTreeHelper(BinTree::Node*&, NodeData**, int, int) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40303A: BinTree::arrayToBSTree(NodeData**) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401D65: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257== 
+==21257== Invalid write of size 8
+==21257==    at 0x4025B6: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402580: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402580: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402566: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40252C: BinTree::makeEmpty() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401D83: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==  Address 0x5abd4b0 is 0 bytes inside a block of size 24 free'd
+==21257==    at 0x4C2F24B: operator delete(void*) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==21257==    by 0x4025AE: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402580: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402580: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402566: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40252C: BinTree::makeEmpty() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401D83: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==  Block was alloc'd at
+==21257==    at 0x4C2E0EF: operator new(unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==21257==    by 0x403085: BinTree::arrayToBSTreeHelper(BinTree::Node*&, NodeData**, int, int) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40317F: BinTree::arrayToBSTreeHelper(BinTree::Node*&, NodeData**, int, int) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40317F: BinTree::arrayToBSTreeHelper(BinTree::Node*&, NodeData**, int, int) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x403158: BinTree::arrayToBSTreeHelper(BinTree::Node*&, NodeData**, int, int) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40303A: BinTree::arrayToBSTree(NodeData**) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401D65: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257== 
+==21257== Invalid write of size 8
+==21257==    at 0x4025B6: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402566: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40252C: BinTree::makeEmpty() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401D83: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==  Address 0x5abd0f0 is 0 bytes inside a block of size 24 free'd
+==21257==    at 0x4C2F24B: operator delete(void*) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==21257==    by 0x4025AE: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402566: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40252C: BinTree::makeEmpty() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401D83: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==  Block was alloc'd at
+==21257==    at 0x4C2E0EF: operator new(unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==21257==    by 0x403085: BinTree::arrayToBSTreeHelper(BinTree::Node*&, NodeData**, int, int) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x403158: BinTree::arrayToBSTreeHelper(BinTree::Node*&, NodeData**, int, int) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40303A: BinTree::arrayToBSTree(NodeData**) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401D65: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257== 
+==21257== Invalid write of size 8
+==21257==    at 0x4025B6: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402580: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40252C: BinTree::makeEmpty() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401D83: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==  Address 0x5abd570 is 0 bytes inside a block of size 24 free'd
+==21257==    at 0x4C2F24B: operator delete(void*) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==21257==    by 0x4025AE: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402580: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40252C: BinTree::makeEmpty() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401D83: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==  Block was alloc'd at
+==21257==    at 0x4C2E0EF: operator new(unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==21257==    by 0x403085: BinTree::arrayToBSTreeHelper(BinTree::Node*&, NodeData**, int, int) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40317F: BinTree::arrayToBSTreeHelper(BinTree::Node*&, NodeData**, int, int) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40303A: BinTree::arrayToBSTree(NodeData**) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401D65: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257== 
+==21257== Invalid write of size 8
+==21257==    at 0x4025B6: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40252C: BinTree::makeEmpty() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401D83: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==  Address 0x5abd030 is 0 bytes inside a block of size 24 free'd
+==21257==    at 0x4C2F24B: operator delete(void*) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==21257==    by 0x4025AE: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40252C: BinTree::makeEmpty() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401D83: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==  Block was alloc'd at
+==21257==    at 0x4C2E0EF: operator new(unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==21257==    by 0x403085: BinTree::arrayToBSTreeHelper(BinTree::Node*&, NodeData**, int, int) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40303A: BinTree::arrayToBSTree(NodeData**) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401D65: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257== 
+---------------------------------------------------------------
+Initial data:
+  b a c b a c $$ 
+Tree Inorder:
+abc            c
+        b
+            a
+Retrieve --> and:  not found
+Retrieve --> not:  not found
+Retrieve --> sss:  not found
+Height    --> and:  0
+Height    --> not:  0
+Height    --> sss:  0
+Height    --> tttt:  0
+Height    --> ooo:  0
+Height    --> y:  0
+==21257== Invalid write of size 8
+==21257==    at 0x4025B6: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40252C: BinTree::makeEmpty() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4025EB: BinTree::operator=(BinTree const&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401C2A: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==  Address 0x5abb5f0 is 0 bytes inside a block of size 24 free'd
+==21257==    at 0x4C2F24B: operator delete(void*) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==21257==    by 0x4025AE: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40252C: BinTree::makeEmpty() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4025EB: BinTree::operator=(BinTree const&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401C2A: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==  Block was alloc'd at
+==21257==    at 0x4C2E0EF: operator new(unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==21257==    by 0x402644: BinTree::copyHelper(BinTree::Node*&, BinTree::Node*) const (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40261C: BinTree::operator=(BinTree const&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401C2A: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257== 
+T == T2?     not equal
+T != first?  not equal
+T == dup?    not equal
+==21257== Invalid write of size 8
+==21257==    at 0x4025B6: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40252C: BinTree::makeEmpty() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4025EB: BinTree::operator=(BinTree const&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401D33: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==  Address 0x5abc070 is 0 bytes inside a block of size 24 free'd
+==21257==    at 0x4C2F24B: operator delete(void*) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==21257==    by 0x4025AE: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40252C: BinTree::makeEmpty() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4025EB: BinTree::operator=(BinTree const&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401D33: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==  Block was alloc'd at
+==21257==    at 0x4C2E0EF: operator new(unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==21257==    by 0x402644: BinTree::copyHelper(BinTree::Node*&, BinTree::Node*) const (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40261C: BinTree::operator=(BinTree const&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401D33: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257== 
+            c
+        b
+            a
+---------------------------------------------------------------
+Initial data:
+  c b a $$ 
+Tree Inorder:
+abc        c
+            b
+                a
+Retrieve --> and:  not found
+Retrieve --> not:  not found
+Retrieve --> sss:  not found
+Height    --> and:  0
+Height    --> not:  0
+Height    --> sss:  0
+Height    --> tttt:  0
+Height    --> ooo:  0
+Height    --> y:  0
+T == T2?     not equal
+T != first?  not equal
+T == dup?    not equal
+            c
+        b
+            a
+---------------------------------------------------------------
+Initial data:
+   
+==21257== Invalid write of size 8
+==21257==    at 0x4025B6: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402566: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40252C: BinTree::makeEmpty() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4024E7: BinTree::~BinTree() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401E18: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==  Address 0x5aba1b0 is 0 bytes inside a block of size 24 free'd
+==21257==    at 0x4C2F24B: operator delete(void*) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==21257==    by 0x4025AE: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402566: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40252C: BinTree::makeEmpty() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4024E7: BinTree::~BinTree() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401E18: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==  Block was alloc'd at
+==21257==    at 0x4C2E0EF: operator new(unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==21257==    by 0x402644: BinTree::copyHelper(BinTree::Node*&, BinTree::Node*) const (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4026C8: BinTree::copyHelper(BinTree::Node*&, BinTree::Node*) const (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4024CB: BinTree::BinTree(BinTree const&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4018D7: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257== 
+==21257== Invalid write of size 8
+==21257==    at 0x4025B6: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402580: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40252C: BinTree::makeEmpty() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4024E7: BinTree::~BinTree() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401E18: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==  Address 0x5aba3f0 is 0 bytes inside a block of size 24 free'd
+==21257==    at 0x4C2F24B: operator delete(void*) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==21257==    by 0x4025AE: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x402580: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40252C: BinTree::makeEmpty() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4024E7: BinTree::~BinTree() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401E18: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==  Block was alloc'd at
+==21257==    at 0x4C2E0EF: operator new(unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==21257==    by 0x402644: BinTree::copyHelper(BinTree::Node*&, BinTree::Node*) const (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4026F7: BinTree::copyHelper(BinTree::Node*&, BinTree::Node*) const (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4024CB: BinTree::BinTree(BinTree const&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4018D7: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257== 
+==21257== Invalid write of size 8
+==21257==    at 0x4025B6: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40252C: BinTree::makeEmpty() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4024E7: BinTree::~BinTree() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401E18: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==  Address 0x5aba0f0 is 0 bytes inside a block of size 24 free'd
+==21257==    at 0x4C2F24B: operator delete(void*) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==21257==    by 0x4025AE: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40252C: BinTree::makeEmpty() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4024E7: BinTree::~BinTree() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401E18: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==  Block was alloc'd at
+==21257==    at 0x4C2E0EF: operator new(unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==21257==    by 0x402644: BinTree::copyHelper(BinTree::Node*&, BinTree::Node*) const (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4024CB: BinTree::BinTree(BinTree const&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4018D7: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257== 
+==21257== Invalid write of size 8
+==21257==    at 0x4025B6: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40252C: BinTree::makeEmpty() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4024E7: BinTree::~BinTree() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401E27: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==  Address 0x5abea70 is 0 bytes inside a block of size 24 free'd
+==21257==    at 0x4C2F24B: operator delete(void*) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==21257==    by 0x4025AE: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40252C: BinTree::makeEmpty() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4024E7: BinTree::~BinTree() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401E27: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==  Block was alloc'd at
+==21257==    at 0x4C2E0EF: operator new(unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==21257==    by 0x402644: BinTree::copyHelper(BinTree::Node*&, BinTree::Node*) const (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40261C: BinTree::operator=(BinTree const&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401D33: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257== 
+==21257== Invalid write of size 8
+==21257==    at 0x4025B6: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40252C: BinTree::makeEmpty() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4024E7: BinTree::~BinTree() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401E36: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==  Address 0x5abe830 is 0 bytes inside a block of size 24 free'd
+==21257==    at 0x4C2F24B: operator delete(void*) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==21257==    by 0x4025AE: BinTree::makeEmptyHelper(BinTree::Node*&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40252C: BinTree::makeEmpty() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x4024E7: BinTree::~BinTree() (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401E36: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==  Block was alloc'd at
+==21257==    at 0x4C2E0EF: operator new(unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==21257==    by 0x402644: BinTree::copyHelper(BinTree::Node*&, BinTree::Node*) const (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x40261C: BinTree::operator=(BinTree const&) (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257==    by 0x401C2A: main (in /home/NETID/connorbg/.U/udrive/css343/343ass2/a.out)
+==21257== 
+==21257== 
+==21257== HEAP SUMMARY:
+==21257==     in use at exit: 72,704 bytes in 1 blocks
+==21257==   total heap usage: 251 allocs, 250 frees, 89,512 bytes allocated
+==21257== 
+==21257== LEAK SUMMARY:
+==21257==    definitely lost: 0 bytes in 0 blocks
+==21257==    indirectly lost: 0 bytes in 0 blocks
+==21257==      possibly lost: 0 bytes in 0 blocks
+==21257==    still reachable: 72,704 bytes in 1 blocks
+==21257==         suppressed: 0 bytes in 0 blocks
+==21257== Rerun with --leak-check=full to see details of leaked memory
+==21257== 
+==21257== For counts of detected and suppressed errors, rerun with: -v
+==21257== ERROR SUMMARY: 108 errors from 28 contexts (suppressed: 0 from 0)
+]0;connorbg@uw1-320-11: ~/U/css343/343ass2[01;32mconnorbg@uw1-320-11[00m:[01;34m~/U/css343/343ass2[00m$ exit
+exit
+
+Script done on Sun 03 Feb 2019 03:49:26 AM PST

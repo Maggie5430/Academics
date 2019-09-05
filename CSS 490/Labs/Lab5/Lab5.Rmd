@@ -1,0 +1,89 @@
+---
+title: "Lab5"
+author: "Margaret Connor"
+date: "2/25/2019"
+output: html_document
+---
+1. How to import and read the data? Should we use the stringAsFactors option in this case?
+```{r}
+credit <-read.csv('/Users/margaretconnor/NetBeansProjects/Rdata/credit.csv', 
+                     stringsAsFactors = TRUE)
+```
+
+2. How to look into the structure of this dataset?
+```{r}
+str(credit)
+```
+
+3. Which features can be possible predictor of a default loan
+I belive almost all are possible predictors except maybe phone, months_loan_duration,and years_at_residence
+
+4. How can you check and study those features? Explain.
+```{r}
+summary(credit)
+```
+
+5. What percentage of the loans in the dataset went into default? is it high? how it this result can affect the loan?
+```{r}
+table(credit$default)
+```
+this table shows that 700/1000 or 70% loans did not default and 30% did default. Yes this is high, 1/3 of the examples is pretty significant. The result can reduce the number of loans given out in an attempt to reduce the default rate. 
+
+6. Why the prior approach is unwise?
+The propr use is unwise because picking the first 900 examples for traning would be picking from an ordered list, we want the data to be truly random and pick randomly from our sample.
+
+7. How to create a random sample in R? cite 2 methods
+The first method to randomly selecting a sample using the sample() fuction
+```{r}
+set.seed(123)
+train_sample<-sample(1000, 900)
+credit_train<-credit[train_sample, ]
+credit_test<-credit[-train_sample, ]
+```
+The second method to create a random sample for training and test data is by extracting a random number sequence using the uniform distribution:
+```{r}
+set.seed(12345)
+train_rand<-order(runif(1000))
+credit_train<-credit[train_rand[1:900], ]
+credit_rest<-credit[train_rand[901:1000], ]
+```
+
+8. By setting a seed to 123, create the random training  sample and test sample, named credit_train and credit_test using a random sample method of your choice. 
+```{r}
+set.seed(123)
+train_sample<-sample(1000, 900)
+credit_train<-credit[train_sample, ]
+credit_test<-credit[-train_sample, ]
+```
+
+9. How to check if you train and test split is fair
+```{r}
+str(credit_train)
+str(credit_test)
+```
+Assume that the method correctly divided the variables randomly and observe that the correct number of examples are in each set. 
+
+10. How to install and load the c50 package in R?
+```{r}
+library(C50)
+```
+
+11. using the C5.0 algorithm description from the lecture slides, train the model.
+```{r}
+credit_train$default<-as.factor(credit_train$default)
+str(credit_train$default)
+
+credit_C50 <- C5.0 (credit_train[-17], credit_train$default)
+```
+
+12. Explain the result of training the model
+The results should be a decision tree based off the c5.0 method of deciding nodes/splits
+
+13. How you can see the dree's decision? Explain the output results
+```{r}
+summary(credit_C50)
+```
+
+14. Using the C5.0 algorithm descrption from the lecture slides, apply the decision tree model to the test set.
+
+15. How to evaluate the performac

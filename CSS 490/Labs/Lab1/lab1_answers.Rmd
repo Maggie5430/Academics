@@ -1,0 +1,281 @@
+---
+title: "Lab1 answers"
+author: "Diala Ezzeddine"
+date: "January 15, 2019"
+output:
+  html_document:
+    toc: true
+    number_sections: true
+---
+
+# Exploring and understanding data
+
+## Explore the structure of data
+
+We are going to explore the **"usedcars.csv"** dataset, which contains actual data about used cars recently advertised for sale on a popular website. You can access this data from Canvas. Look for the Data file in files or the dataset in Modules Week3.
+
+
+1. How you can load this dataset into R studio?
+
+```{r, cache=TRUE}
+usedcars <- read.csv("C:/Users/diala/OneDrive/Documents/R_labs/Data/usedcars.csv", 
+                     stringsAsFactors = FALSE)
+
+```
+
+2. How the dataset is organised? explain what you see in this data.
+
+
+```{r, echo=TRUE}
+
+str(usedcars);
+
+```
+
+We can learn lot of information about the usedcars dataset by using the str() function.
+
+We can see that this dataset has **150 observations** and **6 features**.
+
+The first feature is **year**, an integer type feature,  where its first 4 values is 2011.
+
+The second feature is **model**, a character type feature, where its first 4 values is SEL.
+
+The third feature is **price**, an integer type feature, where the first value is 21992.
+
+The fourth feature is **mileage**, an integer type feature, where the first value is 7413.
+
+The fifth feature is **color**, a character type feature, where the first value is Yellow.
+
+The sixth feature is **tansmission**, a character type feature, where its first 4 values is AUTO.
+
+
+
+
+3. Are all those features clearly stated? 
+
+
+Those features are stated correctly but it is not clear yet what the year feature refer to, the year the vehicle was manufactured or the year the advertisement for those cars was posted.
+
+The model, price, mileage, color and transmission are most likely refering to the car characteristics.
+
+
+## Exploring numeric variables
+
+
+Let's look deeper into the three numerical variables in the usedcars dataset: **year**, **price** and **mileage**.
+
+1. Find the central and spread measures of those 3 features. 
+
+
+```{r, echo=TRUE}
+summary(usedcars$year);
+summary(usedcars[c("price", "mileage")]);
+
+```
+
+2. What can you conclude from the results of the year variable?
+
+As the numbers we can see in the summary are: Min = 2000, Q1 = 2008,  Median = 2009 and Max = 2012, this could lead us to believe that the year variable indicates the year of manufacture rather than the year of advertisement was posted, since we know the cars were recently listed for sale.
+
+
+3. Discuss the mean and median results of the year and mileage features.
+
+The mean and median of the price variable are 12962\$ and 13592\$. There's no big difference between those two values. We can see that the mean price of used cars is relatively low, which can mean that the data contains lot of economy class cars compared to luxury cars.
+
+The mean and median of the mileage variable are 44261 and 36385. There is a big difference between those two central measures which can be explain by the fact that many cars in the data have high mileage. The mean is very sensitive to outliers. So, high mileage values can skewed the mean value and that can explain the big difference between the mean and median.
+
+
+So, This data has lot of economy cars and lot of cars with high mileage.
+
+
+
+
+4. What is the range, IQR, 30th, 60th, 90% and 99% percentiles of the price variable?
+
+
+```{r, echo=TRUE}
+
+range(usedcars$price);
+
+IQR(usedcars$price);
+
+
+quantile(usedcars$price, seq(from = 0.3, to = 1, by = 0.30));
+
+
+quantile(usedcars$price, probs =  0.99);
+
+
+```
+
+5. Create the price and mileage boxplots and histograms. Can you conclude the distribution for each variable? 
+
+
+```{r, echo=TRUE}
+
+boxplot(usedcars$price, main="Boxplot of Used Car Prices",
+        ylab="Price ($)")
+
+boxplot(usedcars$mileage, main="Boxplot of Used Car Mileage",
+        ylab="Odometer (mi.)")
+
+
+hist(usedcars$price, main = "Histogram of Used Car Prices",
+     xlab = "Price ($)")
+
+hist(usedcars$mileage, main = "Histogram of Used Car Mileage",
+     xlab = "Odometer (mi.)")
+
+
+
+```
+
+Based on the histograms result, the price is approximately normal and the mileage is skewed right.
+
+6. Compute the variance and standard deviation of the price and mileage variables.
+
+
+
+```{r, echo=TRUE}
+
+var(usedcars$price)
+sd(usedcars$price)
+var(usedcars$mileage)
+sd(usedcars$mileage)
+
+
+```
+
+7. Find the interval of advertised prices of the 95% of the cars.
+
+Because the price is normally distributed, we can use the Empirical rule to find the interval of the 95% of advertised car prices.
+
+```{r, echo=TRUE}
+l <- mean(usedcars$price)- 2*(sd(usedcars$price));
+
+h<- mean(usedcars$price)+ 2*(sd(usedcars$price));
+
+l;
+h;
+
+```
+
+The 95% of advertised car prices is between 6716.97\$ and 19206.9\$.
+
+
+
+## Exploring categorical variables
+
+
+Let's look deeper into the three categorical variables in the usedcars dataset: **model**, **color** and **transmission**.
+
+
+1. Examine those 3 variables separately.
+
+
+```{r, echo=TRUE}
+table(usedcars$model);
+table(usedcars$color);
+table(usedcars$transmission);
+
+```
+
+2. Find the central measure of those 3 features. 
+
+The central measure for categorical variable is the mode.
+
+The mode of the variable model is SE. 
+
+The mode of the variable color is Black. 
+
+The mode of the variable transmission is AUTO. 
+
+
+3. Can you find the proportion table of the model?
+
+```{r, echo=TRUE}
+prop.table(table(usedcars$model));
+
+```
+
+4. Display the percentage table with 2 decimal places of the color variable.
+
+
+
+```{r, echo=TRUE}
+round(prop.table(table(usedcars$color))*100,digits = 2);
+
+```
+
+
+Let's look deeper into the following two questions:
+
+**a. Does the price data imply that we are examining only economy-class cars or are there also luxury cars with high mileage?**
+
+**b. Do relationships between the model and color data provide insight into the type of cars we are examining?**
+
+
+
+1. What we should do to answer question a.? Explain your result.
+
+To answer question a, we should examine visualy the relation between the price and mileage using the plot() function.
+
+```{r, echo=TRUE}
+
+plot(x = usedcars$mileage, y = usedcars$price,
+     main = "Scatterplot of Price vs. Mileage",
+     xlab = "Used Car Odometer (mi.)",
+     ylab = "Used Car Price ($)");
+
+```
+
+Using the scatterplot, we notice a clear relationship between the price of a used car and the mileage. Car prices tend to be lower as the mileage increases. This is what we call a negative association.
+
+The interesting finding here is that there are few cars that have both high price and high mileage which is a supporting evidence that this data is unlikely to include any high mileage luxury cars. All the expensive cars in the data seem to have very low mileage which can imply that we could be looking at a brand-new type of car in this data.
+
+2. What we should do to answer question b.? add the chi-squared test to your result. Explain your result.
+
+
+To answer question b, we should examine the relation between the model and color using the CrossTable() function from "gmodels" package. But first, we need to simplify this task by reducing the levels in the color variable to 2 levels instead of 9 available levels (Black, Blue, Gold, Gray, Green, Red, Silver, White, Yellow).
+
+We can create separate those 9 levels into 2 categories: conservative colors (Black, Gray, Silver, White) and colorful colors (Blue, Gold, Green, Red, Yellow).
+
+To do that we will create a new variable that is binary called **conservative** where its value is 1 if the color of the car is conservative and 0 otherwise (which mean presenting the colorful color). This kind of variable is called **dummy variable**.
+
+
+
+```{r, echo=TRUE}
+#install.packages("gmodels");
+
+library(gmodels);
+
+# new variable indicating conservative colors
+usedcars$conservative <-
+  usedcars$color %in% c("Black", "Gray", "Silver", "White")
+
+# checking our variable
+table(usedcars$conservative)
+
+# Crosstab of conservative by model
+CrossTable(x = usedcars$model, y = usedcars$conservative)
+
+# Crosstab of conservative by model with the chiq-squared test
+
+CrossTable(x = usedcars$model, y = usedcars$conservative, chisq= TRUE)
+
+# or using the chi-squred test directly
+
+chisq.test(usedcars$model,usedcars$conservative);
+
+```
+
+From the crosstable, we notice that the proportion of SE model with conservative color is almost equal to the 2 other model with conservative color. The result suggests that there is no relation between the model and the chosen color of the car.
+
+The p-value of chi-squared test between those two variables is 0.925. This result suggests that it is very likely that the variations in cell count are due to chance alone and not due to a true association between the model and color.
+
+
+
+
+
+
+

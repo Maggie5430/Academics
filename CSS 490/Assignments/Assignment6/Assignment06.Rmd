@@ -1,0 +1,110 @@
+---
+title: "Assignment06"
+author: "Margaret Connor"
+date: "3/6/2019"
+output: html_document
+---
+
+##What is the boosting method?
+
+Boosting is a method to improve weak classifiers into strong classifiers, it is an ensemble method that aims to improve the predictions of a machine learning algorithm. The idea is to train the classifiers sequentially, improving with each iteration for a more accurate final result, in simplest terms the method learns from its past failures.
+
+There are three type of popular boosting methods Adaptive Boosting, Gradient Boosting, and XGBoost. 
+
+##Try to explain how this method work step by step.
+
+###Adaptive Boosting
+
+Adaptive boosting, also known as AdaBoost, takes multiple weak learner and combines them to produce a single strong learner. The learners in AdaBoost are decision trees with a single split called decision stumps. The boosting method identifies previous misclassified examples by increasing its weight to have a better chance of correct classification when sampled again. 
+
+![](/Users/margaretconnor/NetBeansProjects/Rdata/AdaBoosting.png)
+
+The adaptive boosting method is used in the illustration above. 
+
+**First iteration:** After sampling the training data and applying the first decision stump the classification is illustrated in Box1. Here we notice that 3 positive examples were misclassified, we increase the weight of the classifiers and perform the second classification with that information. 
+
+**Second iteration** Box2 illustrates after the second decision stump is applied, here we correctly identified all positive examples but misclassified 3 negative examples. Again, we increase the weight of the misclassified samples.
+
+**Third iteration** Box3 illustrates the final decision stump where we once again identify the misclassified samples. 
+
+**Ensemble** The three decision stubs are ensembled and used to fit the training data. When the ensembled of all three stumps are used the model fits the training data perfectly. The image clearly illustrates how the new learner uses the previous weaker ones to create a strong, accurate classifier.
+
+###Gradient Boosting
+
+Gradient Boosting is similar to adaptive boosting but focuses on optimization and reducing the residuals. The method begins with a weak learner and continuously adds more weak learners computing the residuals each time using the predictions are updated each iteration to minimize the residuals. New learners are generally added to concentrate on the areas where the existing learners are performing poorly.
+
+![](/Users/margaretconnor/NetBeansProjects/Rdata/Gradient1.png)
+![](/Users/margaretconnor/NetBeansProjects/Rdata/Gradient2.png)
+![](/Users/margaretconnor/NetBeansProjects/Rdata/Gradient3.png)
+**First iteration:** In the first step we take produce a weak learner and attempt to fit it to the training data. You can see that iteration 1 the predicted model that the learner fits the data poorly by itself. On the right the residuals are plotted. From here we try to reduce the error residuals by adding an addition of weak learners in areas where the current learners are weak.
+
+**third iteration:** At this step two additional learners have been applied to decrease the residuals. While the model still poorly fits the data, the performance has increased compared to previous iterations.
+
+**n-1 and n iterations:** Steps performed in the first iteration are repeated until the residuals drop producing a learner that fits the data well. In the case above it took approximately 20 iterations to produce a model with low enough residuals. As a result, we get a model that can predict the training data to a degree of accuracy.
+
+###XGBoost
+
+XGBoot stands for eXtreme Gradient Boosting and is similar to gradient boosting with additional features to increase model performance, computational speed, and scalability. XGBoosting uses tress with weigts in which trees that are calculated with less samples are shrunk in weight. The features reduce the correlation between the trees. Generally, XGBoost is faster than gradient boosting but gradient boosting has a wide range of uses
+
+##How to use this classification method using R: Provide the R package and R function
+```{r}
+#install.packages("adabag");
+library(adabag)
+```
+
+##Try to apply this method using any of the available data from previous labs to train and test the model. 
+```{r}
+credit <-read.csv('/Users/margaretconnor/NetBeansProjects/Rdata/credit.csv', stringsAsFactors = TRUE)
+set.seed(1)
+```
+
+**Training**
+
+Next is to train and evaluate the data using the boosting method, this method will use AdaBoost to classify the data set. 
+
+```{r}
+credit_boost<-boosting(default~., data=credit, boos=TRUE, mfinal=20,coeflearn='Breiman')
+```
+
+**Evaluate**
+
+After 20 iterations we see an error rate of about 2.6%.
+
+```{r}
+errorevol(credit_boost,credit)
+```
+
+**Improving the model**
+
+To illistrate improvement over additional itterations we can observe that after another 16 itterations the rate of error has dropped to 0.1%
+
+```{r}
+#improve the model
+credit_boost<-boosting(default~., data=credit, boos=TRUE, mfinal=36,coeflearn='Breiman')
+errorevol(credit_boost,credit)
+```
+
+##Try to apply the 10 fold cross validation
+
+Training the model
+```{r}
+library(caret)
+
+credit_10fold <- boosting.cv(default~., data = credit, v = 10, boos = TRUE, mfinal = 100, 
+ coeflearn = "Breiman")
+```
+
+Evaluating the model
+```{r}
+str(credit_10fold$error)
+
+#library(gmodels);
+#CrossTable( sms_test_labels,sms_test_pred, prop.chisq = FALSE, prop.t = FALSE, prop.r = FALSE, dnn = c('actual', 'predicted'))
+```
+
+###Sources
+D'Souza, Jocelyn, and Jocelyn D'Souza. “A Quick Guide to Boosting in ML – GreyAtom – Medium.” Medium.com, Medium, 21 Mar. 2018, medium.com/greyatom/a-quick-guide-to-boosting-in-ml-acf7c1585cb5. Gandhi, Rohith, and Rohith Gandhi.
+
+“Boosting Algorithms: AdaBoost, Gradient Boosting and XGBoost.” Hacker Noon, Hacker Noon, 6 May 2018, hackernoon.com/boosting-algorithms-adaboost-gradient-boosting-and-xgboost-f74991cad38c. Gandhi, Rohith, and Rohith
+
+Gandhi. “Gradient Boosting and XGBoost – Hacker Noon.” Hacker Noon, Hacker Noon, 6 May 2018, hackernoon.com/gradient-boosting-and-xgboost-90862daa6c77.

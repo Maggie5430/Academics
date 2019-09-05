@@ -1,0 +1,80 @@
+---
+title: "Assignment07"
+author: "Margaret Connor"
+date: "3/13/2019"
+output: html_document
+---
+```{r}
+# Read Data
+snsdata <-read.csv('/Users/margaretconnor/NetBeansProjects/Rdata/snsdata.csv')
+
+# Fix Min and Max age 
+snsdata$age <- ifelse(snsdata$age >= 13 & snsdata$age < 20,snsdata$age, NA)
+
+# Fix Missing data
+snsdata$female <- ifelse(snsdata$gender == "F" &
+                         !is.na(snsdata$gender), 1, 0)
+snsdata$no_gender <- ifelse(is.na(snsdata$gender), 1, 0)
+ave_age <- ave(snsdata$age, snsdata$gradyear, FUN = function(x) mean(x, na.rm = TRUE))
+snsdata$age <- ifelse(is.na(snsdata$age), ave_age, snsdata$age)
+
+# Make dataset
+interests <- snsdata[5:40]
+interests_z <- as.data.frame(lapply(interests, scale))
+set.seed(333) 
+sns_clusters <- kmeans(interests_z, 5)
+```
+
+##Evaluating model performance
+Evaluating clustering results can be somewhat subjective.
+
+Ultimately, the success or failure of the model hinges on whether the clusters are useful for their intended purpose.
+
+As the goal of this analysis was to identify clusters of teenagers with similar interests for marketing purposes, we will largely measure our success in qualitative terms.
+
+For other clustering applications, more quantitative measures of success may be needed. One of the most basic ways to evaluate the utility of a set of clusters is to examine the number of examples falling in each of the groups. If the groups are too large or too small, they are not likely to be very useful.
+
+**14. How to obtain the size of the kmeans() clusters? Explain those results.**
+```{r}
+table(sns_clusters$cluster)
+```
+From here we can see that the majority of the examples lie in cluster 1 approximately 71.51% of the examples. The smallest cluster is 3 consisting of only 2.69% of the examples.
+
+**15. How to obtain the clusters centroids coordinates? Explain those results.**
+```{r}
+sns_clusters$centers
+```
+The results show the mean value for the following cluster in each feature interest category
+
+**16. Can you identify some clusters interests? How those results can be used for marketing?**
+```{r}
+colMeans(sns_clusters$centers)
+```
+we examine that the cluster center falls above or below the mean of each category. We notice cluster 5 is above the mean in all sports categories, from here we an assume that cluster 5 relates to extracuricular activities. If we continue doing this for all clusters we can identify each cluster's interests. Cluster 4 has interests in fashion and social topics (mall, clothes, shoppting, church, music), cluster 2 has high interest in romace topics (kissed, sexy, sex, ect), cluster 1 has high interest in no topics which suggest they are part of the antisocial behavior group, and cluster 3 in music (band, marching, music, rock)
+
+##Improving model performance
+Because clustering creates new information, the performance of a clustering algorithm depends at least somewhat on both the quality of the clusters themselves as well as what is done with that information.
+
+In the preceding section, we already demonstrated that the five clusters provided useful and novel insights into the interests of teenagers.
+
+By that measure, the algorithm appears to be performing quite well.
+
+Therefore, we can now focus our effort on turning these insights into action.
+
+We’ll begin by applying the clusters back onto the full dataset.
+
+**17. How to add the clusters assignment as a new feature to the full dataset? show the results of the first 10 inputs.**
+```{r}
+snsdata$cluster <- sns_clusters$cluster
+snsdata[1:10, c("cluster", "gender","age", "friends")]
+```
+
+**18. Does the age vary by clusters? How about the gender and the friends feature? Explain each results.**
+```{r}
+aggregate(data = snsdata, age ~ sns_clusters$cluster, mean)
+```
+The age only varies slightly by cluster, we see that cluster 4 varies the most dropping into the youngest age. Generally age is evenly divided by cluster
+```{r}
+aggregate(data = snsdata, friends ~ sns_clusters$cluster, mean)
+```
+The group with the smallest amount of friends is group 1, which makes sense as we categorized those in cluster 1 with antisocial antisocial behavior. Cluster 4 had the most friends which also related to our categorization that they are social with high means in many interests. 
