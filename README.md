@@ -1,5 +1,5 @@
 # Academics
-Compilation of course work from CSSE classes at the University of Washington Bothell. 
+Compilation of my course work from CSSE classes at the University of Washington Bothell. 
 ## Included Courses
 The courses listed bellow are included in this repository but may not be exhaustive.
 
