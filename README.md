@@ -1,5 +1,5 @@
 # Academics
-A collection of projects and documentation from coding centered course work
+Compilation of course work from CSSE classes at the University of Washington Bothell. 
 ## Included Courses
 The courses listed bellow are included in this repository but may not be exhaustive.
 
